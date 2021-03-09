@@ -2,7 +2,7 @@
 const express = require('express');
 const http = require('http');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('./swagger.js');
 
 
 //initializations
@@ -11,7 +11,6 @@ const app = express();
 
 //documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-//app.use('/api/v1', require('./Routes/index'));
 
 
 // Starting server http 

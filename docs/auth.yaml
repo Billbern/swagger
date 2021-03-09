@@ -1,0 +1,120 @@
+paths:
+
+    /auth/signup:
+        post:
+            tags:
+                - Auth
+            summary: Sign Up
+            description: Path that registers the user
+            parameters:
+                -   name: user
+                    in: body
+                    description: User Information
+                    properties:
+                        first_name:
+                            type: string
+                            example: Jonh
+                        last_name:
+                            type: string
+                            example: Doe
+                        email:
+                            type: string
+                            example: john@doe.com
+                        password:
+                            type: string
+                            example: Hola.123
+            responses:
+                '201':
+                    description: User was created
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: true
+                            user:
+                                $ref: '#/definitions/User'
+                '401':
+                    description: Error creating user
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: false
+                            error:
+                                type: string
+                                example: Error message
+
+
+    /auth/signin:
+        post:
+            tags:
+                - Auth
+            summary: Login
+            description: Path to login
+            parameters:
+                -   name: user
+                    in: body
+                    description: Login information
+                    properties:
+                        email:
+                            type: string
+                            example: john@doe.com
+                        password:
+                            type: string
+                            example: Hola.123
+            responses:
+                '200':
+                    description: Session started
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: true
+                            user:
+                                $ref: '#/definitions/User'
+                '401':
+                    description: Failed to login
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: false
+                            error:
+                                type: string
+                                example: '`Incorrect email or password`'
+                '500':
+                    description: Error in Database
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: false
+                            error:
+                                type: string
+                                example: Error searching in DB
+
+
+    /auth/logout:
+        get:
+            tags:
+                - Auth
+            summary: Logout
+            description: Path to logout
+            responses:
+                '200':
+                    description: Logout
+                    schema:
+                        type: object
+                        properties:
+                            ok:
+                                type: boolean
+                                example: true
+
+definitions: 
+    User:
+        'definitions.yaml#/User'
